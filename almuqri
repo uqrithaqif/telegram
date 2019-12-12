@@ -1,0 +1,92 @@
+import logging
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
+from telegram.ext import MessageHandler
+from telegram.ext import Filters
+
+updater = Updater(token='1026524451:AAE8rtkteUypfvCbiLj18JT-XmxNMkEblH8', use_context=True)
+
+dispatcher = updater.dispatcher
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.INFO)
+
+def start(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="السلام عليكم ورحمة الله وبركاته. أنا المقرئ. أهلا بك إلى هذا الرنامج. سأساعدك في بحث كل ما تريد إن شاء الله. إرسل إلي كلمة /help")
+    
+start_handler = CommandHandler('start', start)
+dispatcher.add_handler(start_handler)
+
+def help(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="إرسل إلي كلمةٍ التي تبحثها")
+    
+start_handler = CommandHandler('help', help)
+dispatcher.add_handler(start_handler)
+
+def contactus(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="أنا المقرئ، إذا عندك أي السؤال أو المشكلة أو الإقتراح فعليك أن تتّصل بي عبر حاسبي ( @almuqriadmin )")
+    
+start_handler = CommandHandler('contactus', contactus)
+dispatcher.add_handler(start_handler)
+
+def mufradat(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="ضغط \n إقناع \n توزع \n صقل المعلومات \n ")
+    
+start_handler = CommandHandler('mufradat', mufradat)
+dispatcher.add_handler(start_handler)
+
+#def test(update, context):
+#    context.bot.send_message(chat_id=update.effective_chat.id, text='I fine. And you?')
+
+#how_handler = MessageHandler(Filters.regex("testing"), test)
+#dispatcher.add_handler(how_handler)
+
+#def how(update, context):
+#    context.bot.send_message(chat_id=update.effective_chat.id, text='I am fine. And you?')
+
+#how_handler = MessageHandler(Filters.regex("how are you?"), how)
+#dispatcher.add_handler(how_handler)
+
+#def الحمد(update, context):
+#    context.bot.send_message(chat_id=update.effective_chat.id, text='المدح')
+    
+#how_handler = MessageHandler(Filters.regex("الحمد"), الحمد)
+#dispatcher.add_handler(how_handler)
+ 
+# def سبحان(update, context):
+#     context.bot.send_message(chat_id=update.effective_chat.id, text='تسبيح لله')
+    
+# how_handler = MessageHandler(Filters.regex("سبحان"), سبحان)
+# dispatcher.add_handler(how_handler)
+
+# def ترفيه(update, context):
+#     context.bot.send_message(chat_id=update.effective_chat.id, text="maksudnya adalah hiburan, \n pernah dipelajari dalam kelas ustaz halim,tarikh bla bla")
+
+# how_handler = MessageHandler(Filters.regex("ترفيه"), ترفيه)
+# dispatcher.add_handler(how_handler)
+
+# Testing
+
+def translation(update, context):
+    message = update.message.text
+    translationDict = {
+    'ضغط' : "الترفيه \n الترجمة:tekanan \n المعنى: القوة الواقعة على وحدة المساحات في الاتجاه العموديّ عليها \n الجمع:ضغوط \n التصريف: ضغط يضغط ضغطٌ \n  الحصة: أستاذة حنان \n التاريخ: 23/9/2019",
+    'ما اسمك' : 'اسمي مقرئ',
+    'إقناع' : "إقناع \n الترجمة:meyakinkan \n المعنى: حَاوَلَ إقْنَاعَهُ بِرَأْيِهِ :-: أنْ يَجْعَلَهُ يُسَلِّمُ بِهِ عَنْ رِضىً \n الجمع:- \n التصريف: أقنعَ يُقْنِع ، إقناعًا ، فهو مُقْنِع ، والمفعول مُقْنَع \n  الحصة: أستاذ حليم \n التاريخ: 23/9/2019",
+    'توزع' : "توزع \n الترجمة:tersebar (dengan sendiri) \n المعنى: تَوَزَّعَتِ الغَنِيمَةُ : تَفَرَّقَتْ \n الجمع:- \n التصريف: توزَّعَ / توزَّعَ على يتوزَّع ، تَوزُّعًا ، فهو مُتوزِّع ، والمفعول مُتوزَّع - للمتعدِّي \n  الحصة: أستاذ محمد \n التاريخ: 23/9/2019",
+    'صقل المعلومات' : "صقل المعلومات \n الترجمة: menajamkan maklumat \n المعنى: - \n الجمع:- \n التصريف: - \n  الحصة: أستاذ حليم \n التاريخ: 25/9/2019",
+    }
+
+    print("Keyword: ", message)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=translationDict[str(message)])
+
+how_handler = MessageHandler(Filters.text, translation)
+dispatcher.add_handler(how_handler)
+
+def unknown(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text='wrong command')
+
+unknown_handler = MessageHandler(Filters.text, unknown)
+dispatcher.add_handler(unknown_handler)
+
+updater.start_polling()
